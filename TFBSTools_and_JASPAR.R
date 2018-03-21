@@ -10,7 +10,7 @@ library(JASPAR2018)
 library(Biostrings)
 
 ## Set working directory
-setwd('/Users/mijiarui/biosoft/HOMER/results/brown')
+setwd('/Users/mijiarui/biosoft/HOMER/results/blue')
 
 ## Prepare two file
 ### For TFBS detection, there are two files needs to be prepared. The first is a PWM (position weighted matrix)
@@ -27,7 +27,7 @@ opts[['matrixtype']] <- 'PWM'
 PWMatrixList <- getMatrixSet(JASPAR2018, opts)
 
 ### Make you sequence object
-dnaSet <- readDNAStringSet('brown.fa', format = 'fasta')
+dnaSet <- readDNAStringSet('blue.fa', format = 'fasta')
 dnaTab <- as.data.frame(dnaSet)
 
 ### For loop to get the results. The key function is 'searchSeq()' which contains PWM and sequence 
