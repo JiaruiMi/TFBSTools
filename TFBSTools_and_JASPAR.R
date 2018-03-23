@@ -10,7 +10,7 @@ library(JASPAR2018)
 library(Biostrings)
 
 ## Set working directory
-setwd('/Users/mijiarui/biosoft/HOMER/results/blue')
+setwd('/Users/mijiarui/biosoft/HOMER/results/yellow')
 
 ## Prepare two file
 ### For TFBS detection, there are two files needs to be prepared. The first is a PWM (position weighted matrix)
@@ -27,7 +27,7 @@ opts[['matrixtype']] <- 'PWM'
 PWMatrixList <- getMatrixSet(JASPAR2018, opts)
 
 ### Make you sequence object
-dnaSet <- readDNAStringSet('blue.fa', format = 'fasta')
+dnaSet <- readDNAStringSet('yellow_nonredundant.fa', format = 'fasta')
 dnaTab <- as.data.frame(dnaSet)
 
 ### For loop to get the results. The key function is 'searchSeq()' which contains PWM and sequence 
@@ -39,12 +39,12 @@ for (i in rownames(dnaTab)){
   seqName <- i
   seqFas <- as.character(dnaTab[seqName,])
   subject <- DNAString(seqFas)
-  siteSetList <- searchSeq(PWMatrixList, subject, seqname = seqName, min.score = '99.9%', strand = '*')
+  siteSetList <- searchSeq(PWMatrixList, subject, seqname = seqName, min.score = '80%', strand = '*')
   if (j == 1){
-    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result.gff3', quote = F,
+    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018.gff3', quote = F,
                 sep = '\t', row.names = F)
   } else {
-    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result.gff3', quote = F,
+    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018.gff3', quote = F,
                 sep = '\t', append = T, col.names = F, row.names = F)
   }
 }
