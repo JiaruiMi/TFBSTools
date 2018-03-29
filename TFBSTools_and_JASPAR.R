@@ -10,7 +10,7 @@ library(JASPAR2018)
 library(Biostrings)
 
 ## Set working directory
-setwd('/Users/mijiarui/biosoft/HOMER/results/yellow')
+setwd('/Users/mijiarui/biosoft/HOMER/results/significant_alpha_vs_betaDelta_lincRNA_2')
 
 ## Prepare two file
 ### For TFBS detection, there are two files needs to be prepared. The first is a PWM (position weighted matrix)
@@ -21,13 +21,16 @@ setwd('/Users/mijiarui/biosoft/HOMER/results/yellow')
 ### /Users/mijiarui/RNA-seq/danio_genome/Danio_rerio.GRCz10.fa -bed promoter.txt
 
 ### Make an 'opts' object to help you retrieve the PWM from JASPAR2028
+### First let's check which category you want to test. Here I chose 'tax_group' and vertebrates, but of course, you can
+### chose other options, especially 'species' and the taxonomy_id of the species (Check it in NCBI taxonomy track)
+?getMatrixSet
 opts = list()
 opts[['tax_group']] <- 'vertebrates'
 opts[['matrixtype']] <- 'PWM'
 PWMatrixList <- getMatrixSet(JASPAR2018, opts)
 
 ### Make you sequence object
-dnaSet <- readDNAStringSet('yellow_nonredundant.fa', format = 'fasta')
+dnaSet <- readDNAStringSet('promoter_significant_alpha_vs_betaDelta_lincRNA.fa', format = 'fasta')
 dnaTab <- as.data.frame(dnaSet)
 
 ### For loop to get the results. The key function is 'searchSeq()' which contains PWM and sequence 
@@ -39,12 +42,13 @@ for (i in rownames(dnaTab)){
   seqName <- i
   seqFas <- as.character(dnaTab[seqName,])
   subject <- DNAString(seqFas)
-  siteSetList <- searchSeq(PWMatrixList, subject, seqname = seqName, min.score = '80%', strand = '*')
+  siteSetList <- searchSeq(PWMatrixList, subject, seqname = seqName, min.score = '90%', strand = '*')
   if (j == 1){
-    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018.gff3', quote = F,
+    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018_alpha.gff3', quote = F,
                 sep = '\t', row.names = F)
   } else {
-    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018.gff3', quote = F,
+    write.table(writeGFF3(siteSetList, scoreType = 'relative'), file = 'result_vertebrates_2018_alpha.gff3', quote = F,
                 sep = '\t', append = T, col.names = F, row.names = F)
   }
 }
+
