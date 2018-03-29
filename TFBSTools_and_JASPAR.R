@@ -62,7 +62,6 @@ setwd('/Users/mijiarui/biosoft/HOMER/results')
 bubble <- read.csv('bubble_TF.csv', header = T, quote = "", check.names = F, stringsAsFactors = T)
 head(bubble)
 library('ggplot2')
-library('RColorBrewer')
 bubble$Log_normalized_counts <- as.factor(round(bubble$log_normalized_counts))
 ggplot(data = bubble, mapping = aes(x = Cell_type, y = Transcription_factor, size = Neg_logPvalue, col = log_normalized_counts)) + 
   geom_point() + theme_classic() + scale_color_gradient(low = 'blue', high = 'red')
