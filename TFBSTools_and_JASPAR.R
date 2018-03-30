@@ -64,4 +64,5 @@ head(bubble)
 library('ggplot2')
 bubble$Log_normalized_counts <- as.factor(round(bubble$log_normalized_counts))
 ggplot(data = bubble, mapping = aes(x = Cell_type, y = Transcription_factor, size = Neg_logPvalue, col = log_normalized_counts)) + 
-  geom_point() + theme_classic() + scale_color_gradient(low = 'blue', high = 'red')
+  geom_point() + theme_classic() + scale_color_gradient(low = 'brown', high = 'yellow') + 
+  scale_size(range = c(2,12))
