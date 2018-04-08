@@ -59,10 +59,20 @@ for (i in rownames(dnaTab)){
 #
 #================================================================================
 setwd('/Users/mijiarui/biosoft/HOMER/results')
-bubble <- read.csv('bubble_TF.csv', header = T, quote = "", check.names = F, stringsAsFactors = T)
+bubble <- read.csv('bubble_TF.csv', header = T, quote = "", check.names = F, stringsAsFactors = T, sep = '\t')
 head(bubble)
 library('ggplot2')
 bubble$Log_normalized_counts <- as.factor(round(bubble$log_normalized_counts))
-ggplot(data = bubble, mapping = aes(x = Cell_type, y = Transcription_factor, size = Neg_logPvalue, col = log_normalized_counts)) + 
+ggplot(data = bubble, mapping = aes(x = Cell_type, y = Transcription_factor, size = log_normalized_counts, col = Neg_logPvalue)) + 
   geom_point() + theme_classic() + scale_color_gradient(low = 'brown', high = 'yellow') + 
-  scale_size(range = c(2,12))
+  scale_size(range = c(2,14)) +
+  labs(x = 'Cell type', y = "Transcription factor binding sites") +
+  theme(axis.title = element_text(size = 18), axis.text = element_text(size = 14))
+
+
+  
+  
+  
+  
+  
+  
